@@ -4,21 +4,21 @@ import { RootState } from '../store';
 
 const API_URL = 'https://gist.githubusercontent.com/orlov-oleg-developer/49f08290d1c59a6851e0a0581900e2a7/raw/e5daf87338f3c75165f8edf4c76cc7ec9c2b4aa9/gistfile1.json';
 
-type Characteristic = {
+export type Characteristic = {
   speed: number;
   force: number;
   engineAmperage: number;
 }
 
-export type Train = {
+export type TrainType = {
   name: string;
-  description: string;
+  description?: string;
   characteristics: Characteristic[];
 }
 
 type TrainsState = {
   isLoading: boolean;
-  trains: Train[];
+  trains: TrainType[];
   errorMessage: string | null; 
 }
 
@@ -36,7 +36,7 @@ export const fetchTrains = createAsyncThunk(
     }
 );
 
-const trainsSlice = createSlice({
+const trainsListSlice = createSlice({
   name: 'trains',
   initialState,
   reducers: {
@@ -58,7 +58,7 @@ const trainsSlice = createSlice({
         state.isLoading = false;
         state.errorMessage = action.error.message || 'Ошибка сервера';
       })
-      .addCase(fetchTrains.fulfilled, (state, action: PayloadAction<Train[]>) => {
+      .addCase(fetchTrains.fulfilled, (state, action: PayloadAction<TrainType[]>) => {
         state.isLoading = false;
         state.trains = action.payload;
         state.errorMessage = null;
@@ -66,6 +66,6 @@ const trainsSlice = createSlice({
   },
 });
 
-export const { clearApiState, deleteMessageError } = trainsSlice.actions;
-export default trainsSlice.reducer;
+export const { clearApiState, deleteMessageError } = trainsListSlice.actions;
+export default trainsListSlice.reducer;
 export const getTrainsState = (state: RootState) => state.trainsReducer;

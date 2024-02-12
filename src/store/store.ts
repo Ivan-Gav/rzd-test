@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import trainsReducer from './slice/trainsSlice';
+import trainsReducer from './slice/trainsListSlice';
+import trainReducer from './slice/trainSlice';
 
 export const store = configureStore({
   reducer: {
-    trainsReducer
+    trainsReducer,
+    trainReducer,
   }
 });
 

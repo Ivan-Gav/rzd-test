@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import {
-  Train,
+  TrainType,
   fetchTrains,
   getTrainsState,
-} from "../../store/slice/trainsSlice";
+} from "../../store/slice/trainsListSlice";
+import { showTrain } from "../../store/slice/trainSlice";
 
 // import s from "./Trains.module.css";
 
@@ -16,7 +17,7 @@ export default function Trains() {
     dispatch(fetchTrains());
   }, []);
 
-  const TrainsTable = ({ trains }: { trains: Train[] }) => {
+  const TrainsTable = ({ trains }: { trains: TrainType[] }) => {
     return (
       <table>
         <thead>
@@ -27,7 +28,7 @@ export default function Trains() {
         </thead>
         <tbody>
           {trains.map((train) => (
-            <tr key={train.name}>
+            <tr key={train.name} onClick={() => dispatch(showTrain(train))}>
               <td>{train.name}</td>
               <td>{train.description}</td>
             </tr>
