@@ -1,30 +1,43 @@
-# React + TypeScript + Vite
+# Тестовое задание ВНИИЖТ
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Деплой приложения
 
-Currently, two official plugins are available:
+[gh-pages](https://ivan-gav.github.io/rzd-test/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Скриншот
 
-## Expanding the ESLint configuration
+![alt text](image.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Скрипты
 
-- Configure the top-level `parserOptions` property like this:
+- запустить dev сервер: `npm run dev`
+- превью прод сборки: `npm run preview`
+- создать прод сборку: `npm run build`
+- запустить линтинг: `npm run lint`
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Задание
+Требуется создать фронтенд приложение на React.js. 
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Изначально в окне должна быть
+нередактируемая таблица со списком поездов. Данные необходимо получить по [ссылке](https://gist.githubusercontent.com/orlov-oleg-developer/49f08290d1c59a6851e0a0581900e2a7/raw/e5daf87338f3c75165f8edf4c76cc7ec9c2b4aa9/gistfile1.json).
+
+При клике на строку с поездом должна появляться еще одна таблица — с характеристиками, которые соответствуют выбранному поезду. 
+
+Характеристика представляет собой массив объектов с тремя полями: 
+- скорость в км/ч
+- сила тяги в кН
+- ток двигателя в А. 
+
+Все ячейки таблицы характеристик должны быть доступны пользователю для редактирования. Программа же должна проверять пользовательский ввод на соответствие
+следующим условиям:
+- скорость — неотрицательное целое число;
+- сила тяги — положительное число с плавающей запятой;
+- ток двигателя — положительное целое число;
+
+Гарантируется, что загружаемые данные валидны.
+
+Если в таблице присутствуют значения, которые не проходят валидацию, то они подсвечиваются красным, а кнопка «Отправить данные» становится неактивной (на неё нельзя нажать). Если данные проходят валидацию, то при нажатии пользователем на кнопку «Отправить данные» в консоли браузера выводится список скоростных ограничений, отсортированных по возрастанию.
+
+Обязательные требования:
+- Приложение должно быть реализовано на Typescript с использованием React 16+ и Redux.
+- Верстка таблиц должна быть реализована через table (не div-ми).
