@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import cn from "classnames";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import {
   getTrainState,
@@ -43,7 +44,7 @@ export default function Cell(props: CellProps) {
 
   return (
     <input
-      className={!isValid ? s.invalid : ""}
+      className={cn(s.cell, !isValid && s.invalid)}
       name={`${type}-${index}`}
       type="number"
       value={value}

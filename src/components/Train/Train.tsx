@@ -2,6 +2,7 @@ import { TrainType } from "../../store/slice/trainsListSlice";
 import Cell from "../Cell/Cell";
 import { useAppSelector } from "../../store/hooks";
 import { getTrainState } from "../../store/slice/trainSlice";
+import s from "./Train.module.css";
 
 export default function Train(props: { train: TrainType }) {
   const { name, characteristics } = props.train;
@@ -19,19 +20,17 @@ export default function Train(props: { train: TrainType }) {
   };
 
   return (
-    <>
-      <h2>
-        Характеристики поезда <span>{name}</span>
-      </h2>
+    <div className={s.container}>
+      <h2 className={s.header}>{name}</h2>
       {!characteristics.length ? (
         <p>Список характеристик отсутствует</p>
       ) : (
-        <table>
-          <thead>
+        <table className={s.table}>
+          <thead className={s.thead}>
             <tr>
-              <th>Ток двигателя</th>
-              <th>сила тяги</th>
-              <th>Скорость</th>
+              <th>Ток двигателя, А</th>
+              <th>Сила тяги, кН</th>
+              <th>Скорость, км/ч</th>
             </tr>
           </thead>
           <tbody>
@@ -41,6 +40,7 @@ export default function Train(props: { train: TrainType }) {
                   key={`${row.engineAmperage}-${Math.floor(row.force)}-${
                     row.speed
                   }`}
+                  className={s.row}
                 >
                   <td>
                     <Cell index={index} type="engineAmperage" />
@@ -57,9 +57,9 @@ export default function Train(props: { train: TrainType }) {
           </tbody>
         </table>
       )}
-      <button disabled={disabled} onClick={onClick}>
+      <button disabled={disabled} onClick={onClick} className={s.button}>
         Отправить данные
       </button>
-    </>
+    </div>
   );
 }

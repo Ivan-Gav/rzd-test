@@ -6,6 +6,7 @@ import {
   getTrainsState,
 } from "../../store/slice/trainsListSlice";
 import { showTrain } from "../../store/slice/trainSlice";
+import s from './Trains.module.css';
 
 export default function Trains() {
   const dispatch = useAppDispatch();
@@ -20,8 +21,8 @@ export default function Trains() {
     const { trains } = props;
 
     return (
-      <table>
-        <thead>
+      <table className={s.table}>
+        <thead className={s.thead}>
           <tr>
             <th>Поезд</th>
             <th>Описание</th>
@@ -29,7 +30,7 @@ export default function Trains() {
         </thead>
         <tbody>
           {trains.map((train) => (
-            <tr key={train.name} onClick={() => dispatch(showTrain(train))}>
+            <tr key={train.name} onClick={() => dispatch(showTrain(train))} className={s.row}>
               <td>{train.name}</td>
               <td>{train.description}</td>
             </tr>
@@ -40,7 +41,8 @@ export default function Trains() {
   };
 
   return (
-    <>
+    <div className={s.container}>
+      <h2 className={s.header}>Поезда</h2>
       {trainsList.isLoading && <h2>Загрузка...</h2>}
       {!trainsList.isLoading && trainsList.errorMessage && (
         <h2>Ошибка: {trainsList.errorMessage}</h2>
@@ -51,6 +53,6 @@ export default function Trains() {
       {!trainsList.isLoading && !!trainsList.trains.length && (
         <TrainsTable trains={trainsList.trains} />
       )}
-    </>
+    </div>
   );
 }
