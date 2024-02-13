@@ -1,8 +1,19 @@
 import { TrainType } from "../../store/slice/trainsListSlice";
-
+import Cell from "../Cell/Cell";
+import { useAppSelector } from "../../store/hooks";
+import {
+  getTrainState,
+} from "../../store/slice/trainSlice";
 
 export default function Train({ train }: { train: TrainType }) {
   const { name, characteristics } = train;
+  const {isValidArray, characteristics: tableCharacteristics } = useAppSelector(getTrainState);
+
+  const disabled = isValidArray.some((cell) => !cell.engineAmperage || !cell.force || !cell.speed);
+
+  const onClick = () => {
+    console.log(tableCharacteristics.map(row => row.speed).sort((a, b) => a - b))
+  }
 
   return (
     <>
@@ -17,18 +28,18 @@ export default function Train({ train }: { train: TrainType }) {
         </tr>
       </thead>
       <tbody>
-          {characteristics.map(line => {
+          {characteristics.map((row, index) => {
             return(
-              <tr key={`${line.engineAmperage}${line.force*100}${line.speed}`}>
-                <td>{line.engineAmperage}</td>
-                <td>{line.force}</td>
-                <td>{line.speed}</td>
+              <tr key={`${row.engineAmperage}${row.force*100}${row.speed}`}>
+                <td><Cell index={index} type="engineAmperage" /></td>
+                <td><Cell index={index} type="force" /></td>
+                <td><Cell index={index} type="speed" /></td>
               </tr>
             )
           })}
       </tbody>
     </table>}
-    <button onClick={() => console.log('Отправить данные')}>Отправить данные</button>
+    <button disabled={disabled} onClick={onClick}>Отправить данные</button>
     </>
   )
 }
