@@ -7,17 +7,18 @@ import {
 } from "../../store/slice/trainsListSlice";
 import { showTrain } from "../../store/slice/trainSlice";
 
-// import s from "./Trains.module.css";
-
 export default function Trains() {
   const dispatch = useAppDispatch();
   const trainsList = useAppSelector(getTrainsState);
 
   useEffect(() => {
     dispatch(fetchTrains());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const TrainsTable = ({ trains }: { trains: TrainType[] }) => {
+  const TrainsTable = (props: { trains: TrainType[] }) => {
+    const { trains } = props;
+
     return (
       <table>
         <thead>
@@ -44,9 +45,9 @@ export default function Trains() {
       {!trainsList.isLoading && trainsList.errorMessage && (
         <h2>Ошибка: {trainsList.errorMessage}</h2>
       )}
-      {!trainsList.isLoading && !trainsList.trains.length && !trainsList.errorMessage && (
-        <h2>Список поездов пуст</h2>
-      )}
+      {!trainsList.isLoading &&
+        !trainsList.trains.length &&
+        !trainsList.errorMessage && <h2>Список поездов пуст</h2>}
       {!trainsList.isLoading && !!trainsList.trains.length && (
         <TrainsTable trains={trainsList.trains} />
       )}
