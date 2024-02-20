@@ -1,7 +1,0 @@
-.page_container {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 350px 1fr;
-  justify-items: left;
-  gap: 2rem;
-}
