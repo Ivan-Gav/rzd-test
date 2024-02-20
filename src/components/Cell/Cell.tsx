@@ -24,22 +24,26 @@ export default function Cell(props: CellProps) {
 
   useEffect(() => {
     const validateCell = () => {
-      const check = {
-        engineAmperage: value > 0 && Number.isInteger(value),
-        force: !isNaN(value) && value > 0,
-        speed: value >= 0 && Number.isInteger(value),
-      };
-      const isCellValid = check[type];
-      dispatch(setCharacteristicValid({ index, type, isValid: isCellValid }));
+      if (!/^([0]|[1-9][0-9]*?|[1-9][0-9]*([.,][0-9]+)?|[0]?[.,][0-9]+)$/.test(value)) {
+        dispatch(setCharacteristicValid({ index, type, isValid: false }));
+      } else {
+        const numValue = Number(value);
+        const check = {
+          engineAmperage: numValue > 0 && Number.isInteger(numValue),
+          force: numValue > 0,
+          speed: numValue >= 0 && Number.isInteger(numValue),
+        };
+        const isCellValid = check[type];
+        dispatch(setCharacteristicValid({ index, type, isValid: isCellValid }));
+      }
     };
 
     validateCell();
   }, [dispatch, index, type, value]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      setCharacteristicValue({ index, type, value: Number(e.target.value) })
-    );
+    e.preventDefault();
+    dispatch(setCharacteristicValue({ index, type, value: e.target.value }));
   };
 
   return (

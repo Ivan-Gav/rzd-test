@@ -15,7 +15,7 @@ export default function Train(props: { train: TrainType }) {
 
   const onClick = () => {
     console.log(
-      tableCharacteristics.map((row) => row.speed).sort((a, b) => a - b)
+      tableCharacteristics.map((row) => Number(row.speed)).sort((a, b) => a - b)
     );
   };
 
@@ -34,12 +34,10 @@ export default function Train(props: { train: TrainType }) {
             </tr>
           </thead>
           <tbody>
-            {characteristics.map((row, index) => {
+            {characteristics.map((_, index) => {
               return (
                 <tr
-                  key={`${row.engineAmperage}-${Math.floor(row.force)}-${
-                    row.speed
-                  }`}
+                  key={`${name}-${index}`}
                   className={s.row}
                 >
                   <td>
