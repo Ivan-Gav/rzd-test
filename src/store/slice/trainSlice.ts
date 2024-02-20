@@ -5,7 +5,7 @@ import { RootState } from "../store";
 type setCharacteristicValueType = {
   index: number;
   type: keyof Characteristic;
-  value: number;
+  value: string;
 };
 
 type setCharacteristicValidType = {
